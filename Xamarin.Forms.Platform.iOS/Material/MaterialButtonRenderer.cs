@@ -33,6 +33,11 @@ namespace Xamarin.Forms.Platform.iOS.Material
 
 		static readonly UIControlState[] s_controlStates = { UIControlState.Normal, UIControlState.Highlighted, UIControlState.Disabled };
 
+		public MaterialButtonRenderer()
+		{
+			VisualElement.VerifyVisualFlagEnabled();
+		}
+
 		public override SizeF SizeThatFits(SizeF size)
 		{
 			var result = base.SizeThatFits(size);
@@ -41,7 +46,6 @@ namespace Xamarin.Forms.Platform.iOS.Material
 			{
 				result.Height = _minimumButtonHeight;
 			}
-
 
 			return result;
 		}

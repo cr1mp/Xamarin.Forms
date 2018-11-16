@@ -15,11 +15,15 @@ namespace Xamarin.Forms.Platform.iOS.Material
 		private VisualElementPackager _packager;
 		private VisualElementTracker _tracker;
 
+		public MaterialFrameRenderer()
+		{
+			VisualElement.VerifyVisualFlagEnabled();
+		}
+
 		Xamarin.Forms.Frame FrameElement
 		{
 			get { return Element as Xamarin.Forms.Frame; }
 		}
-
 
 		public VisualElement Element { get; private set; }
 

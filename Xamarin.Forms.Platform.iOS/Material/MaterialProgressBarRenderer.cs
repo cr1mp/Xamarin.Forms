@@ -10,6 +10,10 @@ namespace Xamarin.Forms.Platform.iOS.Material
 {
 	public class MaterialProgressBarRenderer : ViewRenderer<ProgressBar, MProgressView>
 	{
+		public MaterialProgressBarRenderer()
+		{
+			VisualElement.VerifyVisualFlagEnabled();
+		}
 
 		protected override void OnElementChanged(ElementChangedEventArgs<ProgressBar> e)
 		{

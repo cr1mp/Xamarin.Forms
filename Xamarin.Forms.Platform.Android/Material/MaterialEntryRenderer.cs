@@ -50,6 +50,7 @@ namespace Xamarin.Forms.Platform.Android.Material
 
 		public MaterialEntryRenderer(Context context) : base(new ContextThemeWrapper(context, Resource.Style.XamarinFormsMaterialTheme))
 		{
+			VisualElement.VerifyVisualFlagEnabled();
 			_automationPropertiesProvider = new AutomationPropertiesProvider(this);
 			_effectControlProvider = new EffectControlProvider(this);
 		}

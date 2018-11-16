@@ -16,6 +16,7 @@ namespace Xamarin.Forms.Platform.Android.Material
 
 		public MaterialFormsEditText(Context context) : base(context)
 		{
+			VisualElement.VerifyVisualFlagEnabled();
 			DrawableCompat.Wrap(Background);
 		}
 

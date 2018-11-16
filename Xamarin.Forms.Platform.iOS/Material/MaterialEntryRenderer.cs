@@ -43,7 +43,7 @@ namespace Xamarin.Forms.Platform.iOS.Material
 
 		public MaterialEntryRenderer()
 		{
-			//Frame = new RectangleF(0, 20, 320, 40);
+			VisualElement.VerifyVisualFlagEnabled();
 		}
 
 		//public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
