@@ -7,7 +7,7 @@ using UIKit;
 using Xamarin.Forms;
 using MCard = MaterialComponents.Card;
 
-[assembly: ExportRenderer(typeof(Xamarin.Forms.Frame), typeof(Xamarin.Forms.Platform.iOS.Material.MaterialFrameRenderer), new[] { typeof(Visual.MaterialVisual) })]
+[assembly: ExportRenderer(typeof(Xamarin.Forms.Frame), typeof(Xamarin.Forms.Platform.iOS.Material.MaterialFrameRenderer), new[] { typeof(VisualRendererMarker.Material) })]
 namespace Xamarin.Forms.Platform.iOS.Material
 {
 	public class MaterialFrameRenderer : MCard, IVisualElementRenderer

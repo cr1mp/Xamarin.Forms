@@ -22,7 +22,7 @@ using Android.Support.V4.View;
 using AColor = Android.Graphics.Color;
 using AViewCompat = Android.Support.V4.View.ViewCompat;
 
-[assembly: ExportRenderer(typeof(Button), typeof(MaterialButtonRenderer), new[] { typeof(Visual.MaterialVisual) })]
+[assembly: ExportRenderer(typeof(Button), typeof(MaterialButtonRenderer), new[] { typeof(VisualRendererMarker.Material) })]
 namespace Xamarin.Forms.Platform.Android.Material
 {
 	internal sealed class MaterialButtonRenderer : MButton, IVisualElementRenderer, AView.IOnAttachStateChangeListener,

@@ -19,7 +19,7 @@ namespace Xamarin.Forms.Internals
 	public class Registrar<TRegistrable> where TRegistrable : class
 	{
 		readonly Dictionary<Type, Dictionary<Type, Type>> _handlers = new Dictionary<Type, Dictionary<Type, Type>>();
-		static Type _defaultVisualType = typeof(Visual.DefaultVisual);
+		static Type _defaultVisualType = typeof(VisualRendererMarker.Default);
 		static Type[] _defaultVisualRenderers = new[] { _defaultVisualType };
 
 		public void Register(Type tview, Type trender, Type[] supportedVisuals)

@@ -8,7 +8,7 @@ namespace Xamarin.Forms
 		public RenderWithAttribute(Type type, Type[] supportedVisuals = null)
 		{
 			Type = type;
-			SupportedVisuals = supportedVisuals ?? new[] { typeof(Visual.DefaultVisual) };
+			SupportedVisuals = supportedVisuals ?? new[] { typeof(VisualRendererMarker.Default) };
 		}
 
 		public Type[] SupportedVisuals { get; }

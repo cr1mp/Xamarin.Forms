@@ -23,7 +23,7 @@ using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using MTextInputLayout = Android.Support.Design.Widget.TextInputLayout;
 using Android.OS;
 
-[assembly: ExportRenderer(typeof(Xamarin.Forms.Entry), typeof(MaterialEntryRenderer), new[] { typeof(Visual.MaterialVisual) })]
+[assembly: ExportRenderer(typeof(Xamarin.Forms.Entry), typeof(MaterialEntryRenderer), new[] { typeof(VisualRendererMarker.Material) })]
 namespace Xamarin.Forms.Platform.Android.Material
 {
 	public class MaterialEntryRenderer :

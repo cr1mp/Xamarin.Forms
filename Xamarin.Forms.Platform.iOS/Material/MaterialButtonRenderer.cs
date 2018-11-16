@@ -9,7 +9,7 @@ using SizeF = CoreGraphics.CGSize;
 using MButton = MaterialComponents.Button;
 using Xamarin.Forms;
 
-[assembly: ExportRenderer(typeof(Xamarin.Forms.Button), typeof(Xamarin.Forms.Platform.iOS.Material.MaterialButtonRenderer), new[] { typeof(Visual.MaterialVisual) })]
+[assembly: ExportRenderer(typeof(Xamarin.Forms.Button), typeof(Xamarin.Forms.Platform.iOS.Material.MaterialButtonRenderer), new[] { typeof(VisualRendererMarker.Material) })]
 namespace Xamarin.Forms.Platform.iOS.Material
 {
 	public class MaterialButtonRenderer : ViewRenderer<Button, MButton>

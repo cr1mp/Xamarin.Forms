@@ -2,17 +2,19 @@
 
 namespace Xamarin.Forms
 {
-	public static class Visual
+	public static class VisualMarker
 	{
-		public static IVisual MatchParent { get; } = new MatchParentVisual();
-		public static IVisual Default { get; } = new DefaultVisual();
-		public static IVisual Material { get; } = new MaterialVisual();
-
-		public sealed class MaterialVisual : IVisual { }
-		public sealed class DefaultVisual : IVisual { }
-		public sealed class MatchParentVisual : IVisual { }
+		public static IVisual MatchParent { get; } = new VisualRendererMarker.MatchParent();
+		public static IVisual Default { get; } = new VisualRendererMarker.Default();
+		public static IVisual Material { get; } = new VisualRendererMarker.Material();
 	}
 
+	public static class VisualRendererMarker
+	{
+		public sealed class Material : IVisual { }
+		public sealed class Default : IVisual { }
+		internal sealed class MatchParent : IVisual { }
+	}
 
 	[TypeConverter(typeof(VisualTypeConverter))]
 	public interface IVisual
@@ -29,9 +31,10 @@ namespace Xamarin.Forms
 			{
 				switch (value.Trim().ToLowerInvariant())
 				{
-					case "material": return Visual.Material;
+					case "matchparent": return VisualMarker.MatchParent;
+					case "material": return VisualMarker.Material;
 					case "default":
-					default: return Visual.Default;
+					default: return VisualMarker.Default;
 				}
 			}
 			throw new InvalidOperationException($"Cannot convert \"{value}\" into {typeof(IVisual)}");

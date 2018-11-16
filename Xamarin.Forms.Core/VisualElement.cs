@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms
@@ -55,9 +56,9 @@ namespace Xamarin.Forms
 		public static readonly BindableProperty ScaleYProperty = BindableProperty.Create(nameof(ScaleY), typeof(double), typeof(VisualElement), 1d);
 
 		internal static readonly BindableProperty TransformProperty = BindableProperty.Create("Transform", typeof(string), typeof(VisualElement), null, propertyChanged: OnTransformChanged);
-		
+
 		public static readonly BindableProperty VisualProperty =
-			BindableProperty.Create(nameof(Visual), typeof(IVisual), typeof(VisualElement), Forms.Visual.MatchParent,
+			BindableProperty.Create(nameof(Visual), typeof(IVisual), typeof(VisualElement), Forms.VisualMarker.MatchParent,
 									validateValue: (b, v) => v != null, propertyChanged: OnVisualChanged);
 
 		public IVisual Visual
@@ -66,7 +67,7 @@ namespace Xamarin.Forms
 			set { SetValue(VisualProperty, value); }
 		}
 
-		IVisual _effectiveVisual = Xamarin.Forms.Visual.Default;
+		IVisual _effectiveVisual = Xamarin.Forms.VisualMarker.Default;
 		IVisual IVisualController.EffectiveVisual
 		{
 			get { return _effectiveVisual; }
@@ -82,7 +83,8 @@ namespace Xamarin.Forms
 
 		static void OnTransformChanged(BindableObject bindable, object oldValue, object newValue)
 		{
-			if ((string)newValue == "none") {
+			if ((string)newValue == "none")
+			{
 				bindable.ClearValue(TranslationXProperty);
 				bindable.ClearValue(TranslationYProperty);
 				bindable.ClearValue(RotationProperty);
@@ -93,8 +95,9 @@ namespace Xamarin.Forms
 				bindable.ClearValue(ScaleYProperty);
 				return;
 			}
-				var transforms = ((string)newValue).Split(' ');
-			foreach (var transform in transforms) {
+			var transforms = ((string)newValue).Split(' ');
+			foreach (var transform in transforms)
+			{
 				if (string.IsNullOrEmpty(transform) || transform.IndexOf('(') < 0 || transform.IndexOf(')') < 0)
 					throw new FormatException("Format for transform is 'none | transform(value) [transform(value) ]*'");
 				var transformName = transform.Substring(0, transform.IndexOf('('));
@@ -104,9 +107,11 @@ namespace Xamarin.Forms
 					bindable.SetValue(TranslationXProperty, translationX);
 				else if (transformName.StartsWith("translateY", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out translationY))
 					bindable.SetValue(TranslationYProperty, translationY);
-				else if (transformName.StartsWith("translate", StringComparison.OrdinalIgnoreCase)) {
+				else if (transformName.StartsWith("translate", StringComparison.OrdinalIgnoreCase))
+				{
 					var translate = value.Split(',');
-					if (double.TryParse(translate[0], out translationX) && double.TryParse(translate[1], out translationY)) {
+					if (double.TryParse(translate[0], out translationX) && double.TryParse(translate[1], out translationY))
+					{
 						bindable.SetValue(TranslationXProperty, translationX);
 						bindable.SetValue(TranslationYProperty, translationY);
 					}
@@ -115,9 +120,11 @@ namespace Xamarin.Forms
 					bindable.SetValue(ScaleXProperty, scaleX);
 				else if (transformName.StartsWith("scaleY", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out scaleY))
 					bindable.SetValue(ScaleYProperty, scaleY);
-				else if (transformName.StartsWith("scale", StringComparison.OrdinalIgnoreCase)) {
+				else if (transformName.StartsWith("scale", StringComparison.OrdinalIgnoreCase))
+				{
 					var scale = value.Split(',');
-					if (double.TryParse(scale[0], out scaleX) && double.TryParse(scale[1], out scaleY)) {
+					if (double.TryParse(scale[0], out scaleX) && double.TryParse(scale[1], out scaleY))
+					{
 						bindable.SetValue(ScaleXProperty, scaleX);
 						bindable.SetValue(ScaleYProperty, scaleY);
 					}
@@ -961,11 +968,14 @@ namespace Xamarin.Forms
 
 		static void OnVisualChanged(BindableObject bindable, object oldValue, object newValue)
 		{
+			if(newValue != Xamarin.Forms.VisualMarker.Default)
+				VerifyVisualFlagEnabled();
+
 			var self = bindable as IVisualController;
 			var newVisual = (IVisual)newValue;
 
 			if (newVisual.IsMatchParent())
-				self.EffectiveVisual = Xamarin.Forms.Visual.Default;
+				self.EffectiveVisual = Xamarin.Forms.VisualMarker.Default;
 			else
 				self.EffectiveVisual = (IVisual)newValue;
 
@@ -1052,7 +1062,7 @@ namespace Xamarin.Forms
 
 		void IPropertyPropagationController.PropagatePropertyChanged(string propertyName)
 		{
-			if(propertyName == null || propertyName == VisualElement.FlowDirectionProperty.PropertyName)
+			if (propertyName == null || propertyName == VisualElement.FlowDirectionProperty.PropertyName)
 				SetFlowDirectionFromParent(this);
 
 			if (propertyName == null || propertyName == VisualElement.VisualProperty.PropertyName)
@@ -1075,7 +1085,7 @@ namespace Xamarin.Forms
 
 			SizeAllocated(width, height);
 			SizeChanged?.Invoke(this, EventArgs.Empty);
-		}	
+		}
 
 		public class FocusRequestArgs : EventArgs
 		{
@@ -1105,6 +1115,14 @@ namespace Xamarin.Forms
 				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" into {1}", value, typeof(bool)));
 
 			}
+		}
+
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static void VerifyVisualFlagEnabled(
+			string constructorHint = null,
+			[CallerMemberName] string memberName = "")
+		{
+			ExperimentalFlags.VerifyFlagEnabled(nameof(Visual), ExperimentalFlags.VisualExperimental);
 		}
 	}
 }

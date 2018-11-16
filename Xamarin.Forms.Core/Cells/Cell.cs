@@ -36,7 +36,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		IVisual _effectiveVisual = Xamarin.Forms.Visual.Default;
+		IVisual _effectiveVisual = Xamarin.Forms.VisualMarker.Default;
 		IVisual IVisualController.EffectiveVisual
 		{
 			get { return _effectiveVisual; }
@@ -46,7 +46,7 @@ namespace Xamarin.Forms
 				OnPropertyChanged(VisualElement.VisualProperty.PropertyName);
 			}
 		}
-		IVisual IVisualController.Visual => Xamarin.Forms.Visual.MatchParent;
+		IVisual IVisualController.Visual => Xamarin.Forms.VisualMarker.MatchParent;
 
 		bool IFlowDirectionController.ApplyEffectiveFlowDirectionToChildContainer => true;
 

@@ -5,7 +5,7 @@ using MProgressView = MaterialComponents.ProgressView;
 using Xamarin.Forms;
 using CoreGraphics;
 
-[assembly: ExportRenderer(typeof(Xamarin.Forms.ProgressBar), typeof(Xamarin.Forms.Platform.iOS.Material.MaterialProgressBarRenderer), new[] { typeof(Visual.MaterialVisual) })]
+[assembly: ExportRenderer(typeof(Xamarin.Forms.ProgressBar), typeof(Xamarin.Forms.Platform.iOS.Material.MaterialProgressBarRenderer), new[] { typeof(VisualRendererMarker.Material) })]
 namespace Xamarin.Forms.Platform.iOS.Material
 {
 	public class MaterialProgressBarRenderer : ViewRenderer<ProgressBar, MProgressView>

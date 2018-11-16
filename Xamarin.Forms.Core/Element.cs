@@ -468,7 +468,7 @@ namespace Xamarin.Forms
 			if (controller == null)
 				return;
 
-			if (controller.Visual != Visual.MatchParent)
+			if (controller.Visual != VisualMarker.MatchParent)
 			{
 				controller.EffectiveVisual = controller.Visual;
 				return;

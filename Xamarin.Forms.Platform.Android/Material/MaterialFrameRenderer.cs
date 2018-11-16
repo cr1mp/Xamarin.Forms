@@ -16,7 +16,7 @@ using AColor = Android.Graphics.Color;
 using AView = Android.Views.View;
 
 // this won't go here permanently it's just for testing at this point
-[assembly: ExportRenderer(typeof(Xamarin.Forms.Frame), typeof(MaterialFrameRenderer), new[] { typeof(Visual.MaterialVisual) })]
+[assembly: ExportRenderer(typeof(Xamarin.Forms.Frame), typeof(MaterialFrameRenderer), new[] { typeof(VisualRendererMarker.Material) })]
 namespace Xamarin.Forms.Platform.Android.Material
 {
 	public class MaterialFrameRenderer : MaterialCardView, IVisualElementRenderer, IEffectControlProvider, IViewRenderer, ITabStop

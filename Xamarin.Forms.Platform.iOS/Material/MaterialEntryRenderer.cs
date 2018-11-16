@@ -18,7 +18,7 @@ using Xamarin.Forms;
 // for now using separate renderer as there's some areas of conflict (like place holder)
 // plus we want the linker to be able to link this out if not used
 // possibly use base class for common behavior
-[assembly: ExportRenderer(typeof(Xamarin.Forms.Entry), typeof(Xamarin.Forms.Platform.iOS.Material.MaterialEntryRenderer), new[] { typeof(Visual.MaterialVisual) })]
+[assembly: ExportRenderer(typeof(Xamarin.Forms.Entry), typeof(Xamarin.Forms.Platform.iOS.Material.MaterialEntryRenderer), new[] { typeof(VisualRendererMarker.Material) })]
 namespace Xamarin.Forms.Platform.iOS.Material
 {
 	public class MaterialEntryRenderer : ViewRenderer<Entry, MTextField>
