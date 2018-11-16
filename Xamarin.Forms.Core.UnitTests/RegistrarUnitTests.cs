@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using Xamarin.Forms;
@@ -7,8 +8,8 @@ using Xamarin.Forms.Core.UnitTests;
 [assembly: TestHandler(typeof(Button), typeof(ButtonTarget))]
 [assembly: TestHandler(typeof(ButtonChild), typeof(ButtonChildTarget))]
 [assembly: TestHandler(typeof(Slider), typeof(SliderTarget))]
-[assembly: TestHandler(typeof(Button), typeof(VisualButtonTarget), new[] { typeof(VisualMarker) })]
-[assembly: TestHandler(typeof(Slider), typeof(VisualSliderTarget), new[] { typeof(VisualMarker) })]
+[assembly: TestHandler(typeof(Button), typeof(VisualButtonTarget), new[] { typeof(VisualMarkerUnitTests) })]
+[assembly: TestHandler(typeof(Slider), typeof(VisualSliderTarget), new[] { typeof(VisualMarkerUnitTests) })]
 namespace Xamarin.Forms.Core.UnitTests
 {
 	internal class TestHandlerAttribute : HandlerAttribute
@@ -19,7 +20,7 @@ namespace Xamarin.Forms.Core.UnitTests
 		}
 	}
 
-	public class VisualMarker : IVisual { }
+	public class VisualMarkerUnitTests : IVisual { }
 	public class RegisteredWithNobodyMarker : IVisual { }
 
 	internal class RenderWithTarget : IRegisterable { }
@@ -43,6 +44,7 @@ namespace Xamarin.Forms.Core.UnitTests
 		public override void Setup()
 		{
 			base.Setup();
+			Device.SetFlags(new List<string> { ExperimentalFlags.VisualExperimental });
 			Device.PlatformServices = new MockPlatformServices();
 			Internals.Registrar.RegisterAll(new[] {
 				typeof (TestHandlerAttribute)
@@ -73,7 +75,7 @@ namespace Xamarin.Forms.Core.UnitTests
 			Assert.IsNotNull(renderWithTarget);
 			Assert.That(renderWithTarget, Is.InstanceOf<RenderWithChildTarget>());
 
-			renderWithTarget = Internals.Registrar.Registered.GetHandler(typeof(RenderWithChild), typeof(VisualMarker));
+			renderWithTarget = Internals.Registrar.Registered.GetHandler(typeof(RenderWithChild), typeof(VisualMarkerUnitTests));
 			Assert.IsNotNull(renderWithTarget);
 			Assert.That(renderWithTarget, Is.InstanceOf<RenderWithChildTarget>());
 		}
@@ -85,7 +87,7 @@ namespace Xamarin.Forms.Core.UnitTests
 			Assert.IsNotNull(buttonTarget);
 			Assert.That(buttonTarget, Is.InstanceOf<ButtonChildTarget>());
 
-			buttonTarget = Internals.Registrar.Registered.GetHandler(typeof(ButtonChild), typeof(VisualMarker));
+			buttonTarget = Internals.Registrar.Registered.GetHandler(typeof(ButtonChild), typeof(VisualMarkerUnitTests));
 			Assert.IsNotNull(buttonTarget);
 			Assert.That(buttonTarget, Is.InstanceOf<ButtonChildTarget>());
 		}
@@ -93,7 +95,7 @@ namespace Xamarin.Forms.Core.UnitTests
 		[Test]
 		public void GetButtonHandler()
 		{
-			var buttonTarget = Internals.Registrar.Registered.GetHandler(typeof(Button), typeof(VisualMarker));
+			var buttonTarget = Internals.Registrar.Registered.GetHandler(typeof(Button), typeof(VisualMarkerUnitTests));
 			Assert.IsNotNull(buttonTarget);
 			Assert.That(buttonTarget, Is.InstanceOf<VisualButtonTarget>());
 
@@ -105,7 +107,7 @@ namespace Xamarin.Forms.Core.UnitTests
 		[Test]
 		public void GetSliderHandler()
 		{
-			var sliderTarget = Internals.Registrar.Registered.GetHandler(typeof(Slider), typeof(VisualMarker));
+			var sliderTarget = Internals.Registrar.Registered.GetHandler(typeof(Slider), typeof(VisualMarkerUnitTests));
 			Assert.IsNotNull(sliderTarget);
 			Assert.That(sliderTarget, Is.InstanceOf<VisualSliderTarget>());
 

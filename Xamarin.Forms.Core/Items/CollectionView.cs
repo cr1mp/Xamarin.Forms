@@ -12,6 +12,8 @@ namespace Xamarin.Forms
 	[RenderWith(typeof(_CollectionViewRenderer))]
 	public class CollectionView : ItemsView
 	{
+		internal const string CollectionViewExperimental = "CollectionView_Experimental";
+
 		public CollectionView()
 		{
 			VerifyCollectionViewFlagEnabled(constructorHint: nameof(CollectionView));

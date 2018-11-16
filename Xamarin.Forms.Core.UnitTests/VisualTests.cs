@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms.Internals;
@@ -8,6 +9,14 @@ namespace Xamarin.Forms.Core.UnitTests
 	[TestFixture]
 	public class VisualTests : BaseTestFixture
 	{
+		[SetUp]
+		public override void Setup()
+		{
+			Device.SetFlags(new List<string> { ExperimentalFlags.VisualExperimental });
+			base.Setup();
+			var mockDeviceInfo = new TestDeviceInfo();
+			Device.Info = mockDeviceInfo;
+		}
 
 		[Test]
 		public void ListViewVisualIsInheritedByViewCells()
@@ -351,13 +360,6 @@ namespace Xamarin.Forms.Core.UnitTests
 			Assert.IsTrue(target.IsMaterial(), "EffectiveVisual should be Material");
 			Assert.IsTrue(!target.IsDefault(), "EffectiveVisual should be Material");
 			Assert.AreEqual(Forms.VisualMarker.MatchParent, ((View)view).Visual);
-		}
-
-		[SetUp]
-		public override void Setup()
-		{
-			base.Setup();
-			Device.PlatformServices = new MockPlatformServices();
 		}
 
 		[TearDown]
